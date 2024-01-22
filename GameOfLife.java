@@ -16,7 +16,6 @@ public class GameOfLife {
 		// test3(fileName, 3);
 		test3(fileName, 3);
 		int[][] tester = read(fileName);
-		System.out.println(count(tester, 2, 3));
 
 	}
 
@@ -32,15 +31,7 @@ public class GameOfLife {
 		int[][] board = read(fileName);
 		//// Write here code that tests that the count and cellValue functions
 		//// are working properly, and returning the correct values.
-		print(board);
-		System.out.println(" count:" + count(board, 3, 3));
-		System.out.println();
-		for (int i = 1; i < board.length - 1; i++) {
-			for (int j = 1; j < board[0].length - 1; j++) {
-				board[i][j] = cellValue(board, i, j);
-			}
-		}
-		print(board);
+		
 	}
 
 	// Reads the data file, plays the game for Ngen generations,
@@ -83,18 +74,15 @@ public class GameOfLife {
 		int cols = Integer.parseInt(in.readLine());
 		int[][] board = new int[rows + 2][cols + 2];
 		//// Replace the following statement with your code.
-		for (int i = 1; i < board.length - 1; i++) {
-			String line = in.readLine();
-			for (int j = 1; j < board.length - 1; j++) {
-				if (j <= line.length()) {
-					char ch = line.charAt(j - 1);
-					if (ch == 'x') {
-						board[i][j] = 1;
-					}
+		String line = "";
+		for(int i = 1; i < rows + 1; i++){
+			line = in.readLine();
+			for(int j = 1; j < line.length() + 1; j++){
+				if(line.charAt(j-1) == 'x') {
+					board[i][j] = 1;
 				}
 			}
 		}
-
 		return board;
 	}
 
@@ -103,15 +91,16 @@ public class GameOfLife {
 	// cell in the new board. Returns the new board.
 	public static int[][] evolve(int[][] board) {
 		//// Replace the following statement with your code.
-		int[][] nextGeneration = new int[board.length][board[0].length];
-		for (int i = 1; i < nextGeneration.length - 1; i++) {
-			for (int j = 1; j < nextGeneration[0].length - 1; j++) {
-				nextGeneration[i][j] = cellValue(board, i, j);
+		int [][] nextGeneration = new int[board.length][board[0].length];
+		for (int i = 1; i < board.length - 1; i++) {
+			for (int j = 1; j < board[0].length - 1; j++) {
+				nextGeneration[i-1][j-1] = cellValue(board, i, j);
 			}
 		}
 
 		return nextGeneration;
 	}
+	
 
 	// Returns the value that cell (i,j) should have in the next generation.
 	// If the cell is alive (equals 1) and has fewer than two live neighbors, it
@@ -159,10 +148,11 @@ public class GameOfLife {
 	// Prints the board. Alive and dead cells are printed as 1 and 0, respectively.
 	public static void print(int[][] arr) {
 		//// Write your code here.
-		for (int i = 1; i < arr.length - 1; i++) {
-			for (int j = 1; j < arr[0].length - 1; j++) {
+		for (int i = 0; i < arr.length - 1; i++) {
+			for (int j = 0; j < arr[0].length - 1; j++) {
 				System.out.printf("%3d", arr[i][j]);
 			}
+
 			System.out.println();
 		}
 	}
