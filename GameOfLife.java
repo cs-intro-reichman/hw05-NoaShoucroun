@@ -31,7 +31,7 @@ public class GameOfLife {
 		int[][] board = read(fileName);
 		//// Write here code that tests that the count and cellValue functions
 		//// are working properly, and returning the correct values.
-		
+
 	}
 
 	// Reads the data file, plays the game for Ngen generations,
@@ -73,17 +73,30 @@ public class GameOfLife {
 		int rows = Integer.parseInt(in.readLine());
 		int cols = Integer.parseInt(in.readLine());
 		int[][] board = new int[rows + 2][cols + 2];
+		int j = 1;
 		//// Replace the following statement with your code.
-		String line = "";
-		for(int i = 1; i < rows + 1; i++){
-			line = in.readLine();
-			for(int j = 1; j < line.length() + 1; j++){
-				if(line.charAt(j-1) == 'x') {
-					board[i][j] = 1;
+		while (!in.isEmpty()) {
+			String line = in.readLine();
+			if (line == "") {
+				for (int i = 1; i < cols; i++) {
+					board[j][i] = 0;
 				}
+				j++;
+			}
+			if (!(line == "")) {
+				for (int i = 1; i - 1 < line.length(); i++) {
+					if (line.charAt(i - 1) == '.') {
+						board[j][i] = 0;
+					}
+					if (line.charAt(i - 1) == 'x') {
+						board[j][i] = 1;
+					}
+				}
+				j++;
 			}
 		}
 		return board;
+
 	}
 
 	// Creates a new board from the given board, using the rules of the game.
@@ -91,16 +104,15 @@ public class GameOfLife {
 	// cell in the new board. Returns the new board.
 	public static int[][] evolve(int[][] board) {
 		//// Replace the following statement with your code.
-		int [][] nextGeneration = new int[board.length][board[0].length];
+		int[][] nextGeneration = new int[board.length][board[0].length];
 		for (int i = 1; i < board.length - 1; i++) {
 			for (int j = 1; j < board[0].length - 1; j++) {
-				nextGeneration[i-1][j-1] = cellValue(board, i, j);
+				nextGeneration[i - 1][j - 1] = cellValue(board, i, j);
 			}
 		}
 
 		return nextGeneration;
 	}
-	
 
 	// Returns the value that cell (i,j) should have in the next generation.
 	// If the cell is alive (equals 1) and has fewer than two live neighbors, it
@@ -116,10 +128,13 @@ public class GameOfLife {
 	public static int cellValue(int[][] board, int i, int j) {
 		//// Replace the following statement with your code.
 		int counts = count(board, i, j);
-		if (((board[i - 1][j - 1] == 1) && (counts < 2)) || ((board[i - 1][j - 1] == 1) && (counts > 3))) {
+		if ((board[i - 1][j - 1] == 1) && (counts < 2)) {
 			return 0;
-		} else if (((board[i - 1][j - 1] == 1) && ((counts == 2) || (counts == 3)))
-				|| ((board[i - 1][j - 1] == 0) && (counts == 3))) {
+		} else if ((board[i - 1][j - 1] == 1) && ((counts == 2) || (counts == 3))) {
+			return 1;
+		} else if ((board[i - 1][j - 1] == 1) && (counts > 3)) {
+			return 0;
+		} else if ((board[i - 1][j - 1] == 0) && (counts == 3)) {
 			return 1;
 		} else
 			return board[i - 1][j - 1];
