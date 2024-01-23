@@ -15,7 +15,6 @@ public class GameOfLife {
 		// test2(fileName);
 		// test3(fileName, 3);
 		test3(fileName, 3);
-		int[][] tester = read(fileName);
 
 	}
 
