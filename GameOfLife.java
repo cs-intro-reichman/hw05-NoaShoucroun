@@ -73,15 +73,14 @@ public class GameOfLife {
 		int rows = Integer.parseInt(in.readLine());
 		int cols = Integer.parseInt(in.readLine());
 		int[][] board = new int[rows + 2][cols + 2];
-		
+
 		//// Replace the following statement with your code.
-		for (int i = 1; i< rows+1; i++){
+		for (int i = 1; i < rows + 1; i++) {
 			String line = in.readLine();
-			for (int j =1; j<=cols+1 && j<= line.length(); j++){
-				if (line.charAt(j-1) == 'x'){
+			for (int j = 1; j <= cols + 1 && j <= line.length(); j++) {
+				if (line.charAt(j - 1) == 'x') {
 					board[i][j] = 1;
-				}
-				else{
+				} else {
 					board[i][j] = 0;
 				}
 			}
@@ -98,7 +97,7 @@ public class GameOfLife {
 		int[][] nextGeneration = new int[board.length][board[0].length];
 		for (int i = 1; i < board.length - 1; i++) {
 			for (int j = 1; j < board[0].length - 1; j++) {
-				nextGeneration[i - 1][j - 1] = cellValue(board, i, j);
+				nextGeneration[i][j] = cellValue(board, i, j);
 			}
 		}
 
@@ -119,16 +118,16 @@ public class GameOfLife {
 	public static int cellValue(int[][] board, int i, int j) {
 		//// Replace the following statement with your code.
 		int counts = count(board, i, j);
-		if ((board[i - 1][j - 1] == 1) && (counts < 2)) {
+		if ((board[i][j] == 1) && (counts < 2)) {
 			return 0;
-		} else if ((board[i - 1][j - 1] == 1) && ((counts == 2) || (counts == 3))) {
+		} else if ((board[i][j] == 1) && ((counts == 2) || (counts == 3))) {
 			return 1;
-		} else if ((board[i - 1][j - 1] == 1) && (counts > 3)) {
+		} else if ((board[i][j] == 1) && (counts > 3)) {
 			return 0;
-		} else if ((board[i - 1][j - 1] == 0) && (counts == 3)) {
+		} else if ((board[i][j] == 0) && (counts == 3)) {
 			return 1;
 		} else
-			return board[i - 1][j - 1];
+			return board[i][j];
 
 	}
 
